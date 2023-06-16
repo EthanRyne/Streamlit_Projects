@@ -1,5 +1,6 @@
 import streamlit as st
 import tensorflow as tf
+import PIL
 from PIL import Image
 import cv2
 import numpy as np
@@ -24,36 +25,36 @@ else:
 # Image upload
 uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
-df = pd.read_csv(r"C:\Users\Aman\Downloads\Animal Species.csv")
+df = pd.read_csv(r"Animal Species.csv")
 
 button = st.button('Predict')
 
 @st.cache_resource()
 def loading_models():
     # Load models
-    bird_model = tf.keras.models.load_model(r'E:\Animal Models\bird.h5')
+    bird_model = tf.keras.models.load_model(r'Animal Models\bird.h5')
     bird_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    cat_model = tf.keras.models.load_model(r'E:\Animal Models\cat_no-norm.h5')
+    cat_model = tf.keras.models.load_model(r'Animal Models\cat_no-norm.h5')
     cat_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    cow_model = tf.keras.models.load_model(r'E:\Animal Models\ensemble_cow.h5')
+    cow_model = tf.keras.models.load_model(r'Animal Models\ensemble_cow.h5')
     cow_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    dog_model = tf.keras.models.load_model(r'E:\Animal Models\dog_cv2_no-norm.h5')
+    dog_model = tf.keras.models.load_model(r'Animal Models\dog_cv2_no-norm.h5')
     dog_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    horse_model = tf.keras.models.load_model(r'E:\Animal Models\ensemble_horse.h5')
+    horse_model = tf.keras.models.load_model(r'Animal Models\ensemble_horse.h5')
     horse_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    monkey_model = tf.keras.models.load_model(r'E:\Animal Models\ensemble_monkey.h5')
+    monkey_model = tf.keras.models.load_model(r'Animal Models\ensemble_monkey.h5')
     monkey_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     import tensorflow_hub as hub
     custom_objects = {
         'KerasLayer': hub.KerasLayer
     }
-    animal = tf.keras.models.load_model(r'E:\Animal Models\ensemble_model.h5', custom_objects=custom_objects)
+    animal = tf.keras.models.load_model(r'Animal Models\ensemble_model.h5', custom_objects=custom_objects)
     animal.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     return bird_model, cat_model, cow_model, dog_model, horse_model, monkey_model, animal
